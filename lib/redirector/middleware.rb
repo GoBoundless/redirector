@@ -67,6 +67,7 @@ module Redirector
       end
 
       def redirect_response
+        ::NewRelic::Agent.increment_metric('Custom/Redirector/matched') if Kernel.const_defined? "NewRelic::Agent"
         [301, {'Location' => redirect_url_string},
           [%{You are being redirected <a href="#{redirect_url_string}">#{redirect_url_string}</a>}]]
       end
